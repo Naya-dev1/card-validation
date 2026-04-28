@@ -18,7 +18,7 @@ A REST API built with Node.js, TypeScript, and Express that validates card numbe
 ### Installation
 
 1. Clone the repository
-   git clone <your-github-url>
+   git clone https://github.com/Naya-dev1/card-validation.git
 
 2. Install dependencies
    npm install
@@ -60,10 +60,13 @@ How it works:
 
 ## Design Decisions
 
--Card number accepted as a string — Card numbers are identifiers, not mathematical values. Accepting them as numbers risks losing leading zeros and precision errors with long digit sequences in JavaScript.
--Express over NestJS — Chosen for simplicity and familiarity. Express gives full control over the request/response cycle without the overhead of a full framework for a single endpoint.
--Separate service layer— The Luhn logic lives in its own file rather than inside the controller. This keeps the controller focused on handling requests and makes the validation logic independently testable.
--200 for invalid cards — An invalid card is not an error, it is a successful response to a valid request. 400 is reserved for malformed or missing input.
+-Card number accepted as a string: Card numbers are identifiers, not mathematical values. Accepting them as numbers risks losing leading zeros and precision errors with long digit sequences in JavaScript.
+
+-Express over NestJS: Chosen for simplicity and familiarity. Express gives full control over the request/response cycle without the overhead of a full framework for a single endpoint.
+
+-Separate service layer: The Luhn logic lives in its own file rather than inside the controller. This keeps the controller focused on handling requests and makes the validation logic independently testable.
+
+-200 for invalid cards: An invalid card is not an error, it is a successful response to a valid request. 400 is reserved for malformed or missing input.
 
 ## Running Tests
 
