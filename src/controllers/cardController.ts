@@ -6,30 +6,37 @@ interface CardRequestBody {
 }
 
 export function validateCard(req: Request, res: Response): void {
-  const { cardNumber } = req.body as CardRequestBody;
+  try {
+    const { cardNumber } = req.body as CardRequestBody;
 
-  if (!cardNumber) {
-    res.status(400).json({
-      success: false,
-      message: "Card number is required",
+    if (!cardNumber) {
+      res.status(400).json({
+        success: false,
+        message: "Card number is required",
+      });
+      return;
+    }
+
+    if (typeof cardNumber !== "string") {
+      res.status(400).json({
+        success: false,
+        message: "Card number must be a string",
+      });
+      return;
+    }
+
+    const isValid = luhnCheck(cardNumber);
+
+    res.status(200).json({
+      success: true,
+      cardNumber,
+      isValid,
+      message: isValid ? "Card number is valid" : "Card number is invalid",
     });
-    return;
-  }
-
-  if (typeof cardNumber !== "string") {
-    res.status(400).json({
+  } catch (error) {
+    res.status(500).json({
       success: false,
-      message: "Card number must be a string",
+      message: "Something went wrong on the server",
     });
-    return;
   }
-
-  const isValid = luhnCheck(cardNumber);
-
-  res.status(200).json({
-    success: true,
-    cardNumber,
-    isValid,
-    message: isValid ? "Card number is valid" : "Card number is invalid",
-  });
 }
